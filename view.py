@@ -1,7 +1,7 @@
 import sys
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui
 
-class Example(QtGui.QWidget):
+class Example(QtGui.QMainWindow):
 
 	def __init__(self):
 		super(Example, self).__init__()
@@ -10,26 +10,27 @@ class Example(QtGui.QWidget):
 
 	def initUI(self):
 
-		QtGui.QToolTip.setFont(QtGui.QFont('SansSerif', 10))
+		textEdit = QtGui.QTextEdit()
+		self.setCentralWidget(textEdit)
 
-		#self.statusBar().showMessage('Ready')
-		self.setToolTip('This is a <b>QWidget</b> widget')
+		exitAction = QtGui.QAction(QtGui.QIcon('exit24.png'), 'Exit', self)
+		exitAction.setShortcut('Ctrl+Q')
+		exitAction.setStatusTip('Exit application')
+		exitAction.triggered.connect(self.close)
 
-		btn = QtGui.QPushButton('Button', self)
-		btn.setToolTip('This is a <b>QPushButton</b> widget')
-		btn.resize(btn.sizeHint())
-		btn.move(50, 50)
+		self.statusBar()
 
-		qbtn = QtGui.QPushButton('Quit', self)
-		qbtn.clicked.connect(QtCore.QCoreApplication.instance().quit)
-		qbtn.resize(qbtn.sizeHint())
-		qbtn.move(150, 50)
+		menubar = self.menuBar()
+		fileMenu = menubar.addMenu('&File')
+		fileMenu.addAction(exitAction)
 
-		self.resize(250, 150)
+		toolbar = self.addToolBar('Exit')
+		toolbar.addAction(exitAction)
+
+		self.setGeometry(300, 300, 250, 150)
+		self.setWindowTitle('Statusbar')
+
 		self.center()
-		self.setWindowTitle("Status")
-		self.setWindowIcon(QtGui.QIcon('web.png'))
-
 		self.show()
 
 	def center(self):
@@ -39,22 +40,11 @@ class Example(QtGui.QWidget):
 		qr.moveCenter(cp)
 		self.move(qr.topLeft())
 
-	def closeEvent(self, event):
-
-		reply = QtGui.QMessageBox.question(self, 'Message', 'Are you sure you want to quit?', 
-			QtGui.QMessageBox.Yes | QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-
-		if reply == QtGui.QMessageBox.Yes:
-			event.accept()
-		else:
-			event.ignore()
-
 def main():
 
 	app = QtGui.QApplication(sys.argv)
 	ex = Example()
 	sys.exit(app.exec_())
-
 
 if __name__ == '__main__':
 	main()
