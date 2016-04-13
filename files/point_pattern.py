@@ -1,5 +1,6 @@
 from . import point
 from . import analytics
+from .utils import euclidean_distance
 import random
 import numpy as np
 import scipy.spatial as ss
@@ -18,9 +19,32 @@ class PointPattern(object):
       except:
          pass
 
-    def average_nearest_neighbor_distance(self, mark=None):
-    
-        return analytics.average_nearest_neighbor_distance(self.points, mark)
+    def average_nearest_neighbor_distance(self, mark=None, points_list=None):
+
+        mean_d = 0
+        if points_list == None:
+            temp_points = self.points
+        else:
+            temp_points = points_list
+
+        if mark != None:
+            temp_points = [point for point in self.points if point.mark == mark]
+
+        list = len(temp_points)
+
+        nn_dis = []
+        for i in range(list):
+            distance = []
+
+            for j in range(list):
+                if i == j:
+                    continue
+                else:
+                    distance.append(self.euclidian_distance((temp_points[i].x, temp_points[i].y),(temp_points[j].x, temp_points[j].y)))
+            nn_dis.append(min(distance))
+
+        mean_d = (sum(nn_dis)/len(nn_dis))
+        return mean_d
     
     def average_nearest_neighbor_distance_kdtree(self):
         point_list = []
@@ -29,15 +53,15 @@ class PointPattern(object):
             point_list.append(point.array())
         stack = np.vstack(point_list)
 
-        nn_distances = []
+        nn_dis = []
         kdtree = ss.KDTree(stack)
         for p in stack:
             nearest_neighbor_distance, nearest_neighbor = kdtree.query(p, k=2)
-            nn_distances.append(nearest_neighbor_distance[1])
-        nn_distances = np.array(nn_distances)
+            nn_dis.append(nearest_neighbor_distance[1])
+        nn_distances = np.array(nn_dis)
 
-        return(np.average(nn_distances))
-        print(np.average(nn_distances))
+        return(np.mean(nn_distances))
+
         
     def average_nearest_neighbor_distance_numpy(self):
         point_list = []
@@ -60,8 +84,6 @@ class PointPattern(object):
 
             nearest_neighbor.append(temp_nearest_neighbor)
             temp_nearest_neighbor = None
-
-
 
         
        
