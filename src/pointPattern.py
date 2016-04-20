@@ -71,6 +71,7 @@ class PointPattern(object):
 
     def critical_points(self):
         return analytics.critical_points(self.create_k_patterns(99))
+        #return analytics.critical_points(self.points)
 
     def compute_g(self,nsteps,mark=None):
         """
@@ -225,7 +226,7 @@ class PointPattern(object):
             #now you have the count of observations under that distance band.
             #divide by N and add it to the gFuncL.
             gFuncL.append(count/N)
-        return gFuncL
+        return gFuncL, ds
 
 
     #Generate random points within some domain

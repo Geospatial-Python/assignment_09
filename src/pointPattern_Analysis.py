@@ -30,30 +30,35 @@ for geometry,attributes in zip(shapefile,dbf):
     #okay, so now you actually have the data inside pointPattern's self.points. Now you can do some analysis:
 
     #illustrate the use of mean nearest neighbor on the entire dataset:
-kd_avg_nn = point_pattern.kDTree_nearest_neighbor()
-print("The new_haven_merged dataset has a total average nearest neighbor distance of: ", kd_avg_nn)
+#kd_avg_nn = point_pattern.kDTree_nearest_neighbor()
+#print("The new_haven_merged dataset has a total average nearest neighbor distance of: ", kd_avg_nn)
 
 #illustrate the use of the mean nearest neighbor on a mark:
-kd_avg_nn_mark = point_pattern.kDTree_nearest_neighbor(['animal-bites'])
-print("The new_haven_merged dataset with the mark 'animal-bites' mark has a total average nearest neighbor distance of: ", kd_avg_nn_mark)
+#kd_avg_nn_mark = point_pattern.kDTree_nearest_neighbor(['animal-bites'])
+#print("The new_haven_merged dataset with the mark 'animal-bites' mark has a total average nearest neighbor distance of: ", kd_avg_nn_mark)
 
-kd_avg_nn_mark2 = point_pattern.kDTree_nearest_neighbor(['animal-bites','assault-wdangerous-weapon'])
-print("The new_haven_merged dataset with the mark 'animal-bites' and 'assault-wdangerous-weapon' marks has a total average nearest neighbor distance of", kd_avg_nn_mark2)
+#kd_avg_nn_mark2 = point_pattern.kDTree_nearest_neighbor(['animal-bites','assault-wdangerous-weapon'])
+#print("The new_haven_merged dataset with the mark 'animal-bites' and 'assault-wdangerous-weapon' marks has a total average nearest neighbor distance of", kd_avg_nn_mark2)
 
 
 #ssssssillustrate the use of the g function:
-np_compute_g = point_pattern.numpy_compute_g(12)
-print("The new_haven_merged dataset's g function results are:")
-for g in np_compute_g:
-    print(g)
+#np_compute_g, ds1 = point_pattern.numpy_compute_g(12)
+#print("The new_haven_merged dataset's g function results are:")
+#for g in np_compute_g:
+#    print(g)
 
-np_compute_g_mark  = point_pattern.numpy_compute_g(12,['animal-bites'])
+np_compute_g_mark, ds2  = point_pattern.numpy_compute_g(12,['animal-bites'])
 print("The new_haven_merged dataset's g function results with a mark of 'animal-bites' are: ")
 for g in np_compute_g_mark:
     print(g)
 
-np_compute_g_mark2 = point_pattern.numpy_compute_g(12,['animal-bites','assault-wdangerous-weapon'])
+np_compute_g_mark2, ds3 = point_pattern.numpy_compute_g(12,['animal-bites','assault-wdangerous-weapon'])
 print("The new_haven_merged dataset's g function results with a marks of 'animal-bites' and 'assault-wdangerous-weapon' are: ")
 for g in np_compute_g_mark2:
     print(g)
+
+criticalList = point_pattern.critical_points()
+
+print(criticalList[0])
+print(criticalList[1])
 

@@ -245,9 +245,9 @@ def permutation_nearest_distance(mark=[],p=99,n=100):
         #create n random Points
         marks = ['lavender','orange','rose','ash','violet','magenta','cerulean']
         points = utils.n_random_Points(n,marks) # returns [(x,y),(a,b)..]
-        print("print the points array: ")
-        print(points)
-        print(type(points))
+        #print("print the points array: ")
+        #print(points)
+        #print(type(points))
         #compute mean neighbor distance
         mean_d = average_nearest_neighbor_distance(points)
         LDist.append(mean_d)
@@ -261,6 +261,9 @@ def critical_points(LDist):
     :return CList: list containing critical points
     """
     CList = []
+    #aList = []
+    #for p in LDist:
+    #    print(p)
     smallest = min(LDist)
     largest = max(LDist)
     CList.append(smallest)

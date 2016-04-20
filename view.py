@@ -50,7 +50,7 @@ class View(QtGui.QMainWindow):
         toolbar = self.addToolBar('Exit')
         toolbar.addAction(exitAction)
 
-        #setting the window name 
+        #setting the window name
         self.setWindowTitle('Assignment 9')
         self.show()
 
